@@ -1,0 +1,223 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "",
+  "projects": {
+    "chat-room": {
+      "root": "apps/chat-room/",
+      "sourceRoot": "apps/chat-room/src",
+      "projectType": "application",
+      "prefix": "chat-room",
+      "schematics": {
+        "@nrwl/schematics:component": {
+          "style": "sass"
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/chat-room",
+            "index": "apps/chat-room/src/index.html",
+            "main": "apps/chat-room/src/main.ts",
+            "polyfills": "apps/chat-room/src/polyfills.ts",
+            "tsConfig": "apps/chat-room/tsconfig.app.json",
+            "assets": [
+              "apps/chat-room/src/favicon.ico",
+              "apps/chat-room/src/assets"
+            ],
+            "styles": ["apps/chat-room/src/styles.sass"],
+            "scripts": [],
+            "es5BrowserSupport": true
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/chat-room/src/environments/environment.ts",
+                  "with": "apps/chat-room/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "chat-room:build",
+            "proxyConfig": "apps/chat-room//proxy.conf.json"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "chat-room:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "chat-room:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/chat-room/tsconfig.app.json",
+              "apps/chat-room/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "apps/chat-room/jest.config.js",
+            "tsConfig": "apps/chat-room/tsconfig.spec.json",
+            "setupFile": "apps/chat-room/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "chat-room-e2e": {
+      "root": "apps/chat-room-e2e",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/builders:cypress",
+          "options": {
+            "cypressConfig": "apps/chat-room-e2e/cypress.json",
+            "tsConfig": "apps/chat-room-e2e/tsconfig.e2e.json",
+            "devServerTarget": "chat-room:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "chat-room:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "apps/chat-room-e2e/tsconfig.e2e.json",
+            "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
+    },
+    "api": {
+      "root": "apps/api",
+      "sourceRoot": "apps/api/src",
+      "projectType": "application",
+      "prefix": "api",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/builders:node-build",
+          "options": {
+            "outputPath": "dist/apps/api",
+            "main": "apps/api/src/main.ts",
+            "tsConfig": "apps/api/tsconfig.app.json",
+            "assets": ["apps/api/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/api/src/environments/environment.ts",
+                  "with": "apps/api/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/builders:node-execute",
+          "options": {
+            "buildTarget": "api:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/api/tsconfig.app.json",
+              "apps/api/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "apps/api/jest.config.js",
+            "tsConfig": "apps/api/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "api-interface": {
+      "root": "libs/api-interface",
+      "sourceRoot": "libs/api-interface/src",
+      "projectType": "library",
+      "prefix": "chat-room",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/api-interface/tsconfig.lib.json",
+              "libs/api-interface/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "libs/api-interface/jest.config.js",
+            "tsConfig": "libs/api-interface/tsconfig.spec.json"
+          }
+        }
+      },
+      "schematics": {}
+    }
+  },
+  "cli": {
+    "warnings": {
+      "typescriptMismatch": false,
+      "versionMismatch": false
+    },
+    "defaultCollection": "@nrwl/schematics"
+  },
+  "schematics": {
+    "@nrwl/schematics:application": {
+      "style": "sass",
+      "framework": "angular"
+    },
+    "@nrwl/schematics:library": {
+      "style": "sass"
+    }
+  },
+  "defaultProject": "chat-room"
+}
