@@ -1,0 +1,31 @@
+
+.messages-container{
+  display: flex;
+  flex-flow: column-reverse nowrap;
+  margin: 0px;
+  border: 1px solid black;
+  min-height: 80vh;
+  max-height: 80vh;
+  overflow-y: scroll;
+}
+
+.message {
+  padding: 0.3rem;
+  &:nth-child(odd){
+    background: #EEEEEE;
+  }
+  &:nth-child(even) {
+    background: #FFFFFF;
+  }
+}
+
+input {
+  width: 100%;
+  margin: 0px;
+  margin-top: 1rem;
+}
+
+.input-section {
+  display: grid;
+  grid-template-columns: 1fr 200px 30px;
+}

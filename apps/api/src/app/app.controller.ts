@@ -1,15 +1,25 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get, Post, Body, HttpCode, Logger } from '@nestjs/common';
 
-import { Message } from "@chat-room/api-interface";
+import { Message } from '@chat-room/api-interface';
 
-import { AppService } from "./app.service";
+import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
 
-  @Get("hello")
-  getData(): Message {
-    return this.appService.getData();
+  private logger = new Logger('AppController');
+
+  constructor(private readonly appService: AppService) {
+  }
+
+  @Get('messages')
+  getMessages(): Message[] {
+    return this.appService.getMessages();
+  }
+
+  @Post('messages')
+  @HttpCode(204)
+  addMessage(@Body() message: Message): Message {
+    return this.appService.addMessage(message);
   }
 }

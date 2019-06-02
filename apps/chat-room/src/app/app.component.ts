@@ -1,13 +1,35 @@
-import { Component } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { Message } from "@chat-room/api-interface";
+import { Component } from '@angular/core';
+import { MessagesService } from './messages.service';
+import { interval, Observable } from 'rxjs';
+import { switchMap, map } from 'rxjs/operators';
+import { Message } from '@chat-room/api-interface';
 
 @Component({
-  selector: "chat-room-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.sass"]
+  selector: 'chat-room-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  hello$ = this.http.get<Message>("/api/hello");
-  constructor(private http: HttpClient) {}
+  messages$: Observable<Message[]>;
+  currentMessage = '';
+  user = 'anonymous';
+  color = '#333333';
+
+  constructor(private messagesService: MessagesService) {
+    this.messages$ = this.messagesService.getMessages().pipe(map(messages => messages.reverse()));
+  }
+
+  sendMessage() {
+    this.messagesService.addMessage({
+      message: this.currentMessage,
+      user: this.user,
+      color: this.color,
+      creationDate: new Date().toISOString()
+    });
+    this.currentMessage = '';
+  }
+
+  trackByFn(index, item: Message) {
+    return item.creationDate.toString();
+  }
 }

@@ -1,8 +1,19 @@
-<div style="text-align:center">
-  <h1>Welcome to chat-room!</h1>
-  <img
-    width="450"
-    src="https://raw.githubusercontent.com/nrwl/nx/master/nx-logo.png"
-  />
+<div class="messages-container">
+  <div
+    class="message"
+    *ngFor="let message of (messages$ | async); trackBy: trackByFn"
+  >
+    {{ message.user }} :
+    <span [style.color]="message.color">{{ message.message }}</span>
+  </div>
 </div>
-<div>Message: {{ hello$ | async | json }}</div>
+<div class="input-section">
+  <input
+    [style.color]="color"
+    type="text"
+    [(ngModel)]="currentMessage"
+    (keyup.enter)="sendMessage()"
+  />
+  <input type="text" [(ngModel)]="user" />
+  <input type="color" [(ngModel)]="color" />
+</div>
