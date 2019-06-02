@@ -1,5 +1,7 @@
 # ChatRoom
 
+![chat-websockets](https://user-images.githubusercontent.com/1528304/58764539-b6617500-8557-11e9-97a6-630f1f4eca84.gif)
+
 This project was generated using [Nx](https://nx.dev).
 
 <p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/nx-logo.png" width="450"></p>
