@@ -1,0 +1,10 @@
+version: '3'
+services:
+  chat-room-api:
+    image: chat-room-api
+    ports:
+      - 4001:4001
+  chat-room:
+    image: chat-room
+    ports:
+      - 80:80

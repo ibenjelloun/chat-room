@@ -24,7 +24,11 @@
     "update:check": "ng update",
     "workspace-schematic": "./node_modules/.bin/nx workspace-schematic",
     "dep-graph": "./node_modules/.bin/nx dep-graph",
-    "help": "./node_modules/.bin/nx help"
+    "help": "./node_modules/.bin/nx help",
+    "docker:build-api": "ng build api && docker image build -t chat-room-api -f api.Dockerfile .",
+    "docker:build-chat-room": "ng build api && docker image build -t chat-room -f chat-room.Dockerfile .",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down"
   },
   "private": true,
   "dependencies": {
