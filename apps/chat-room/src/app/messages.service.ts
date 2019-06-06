@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Message } from '@chat-room/api-interface';
 import { Socket } from 'ngx-socket-io';
@@ -8,7 +7,7 @@ import { Socket } from 'ngx-socket-io';
   providedIn: 'root'
 })
 export class MessagesService {
-  constructor(private http: HttpClient, private socket: Socket) {}
+  constructor(private socket: Socket) {}
 
   addMessage(message: Message): void {
     this.socket.emit('messageToServer', message);

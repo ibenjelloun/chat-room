@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MessagesService } from './messages.service';
-import { interval, Observable } from 'rxjs';
-import { switchMap, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Message } from '@chat-room/api-interface';
 
 @Component({
@@ -12,11 +12,13 @@ import { Message } from '@chat-room/api-interface';
 export class AppComponent {
   messages$: Observable<Message[]>;
   currentMessage = '';
-  user = 'anonymous';
+  user = 'anonymous' + new Date().getTime();
   color = '#333333';
 
   constructor(private messagesService: MessagesService) {
-    this.messages$ = this.messagesService.getMessages().pipe(map(messages => messages.reverse()));
+    this.messages$ = this.messagesService
+      .getMessages()
+      .pipe(map(messages => messages.reverse()));
   }
 
   sendMessage() {

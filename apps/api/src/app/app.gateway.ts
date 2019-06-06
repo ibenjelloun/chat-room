@@ -30,6 +30,7 @@ export class AppGateway
   handleDisconnect(client: any) {
     this.logger.log('Has disconnected');
   }
+
   handleConnection(client: any, ...args: any[]) {
     this.logger.log('Connected');
     client.emit('messageToClient', this.appService.getMessages());
