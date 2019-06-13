@@ -3,10 +3,9 @@ services:
   chat-room-api:
     container_name: chat-room-api
     image: chat-room-api
-    ports:
-      - 4001:4001
   chat-room:
     container_name: chat-room
     image: chat-room
     ports:
       - 80:80
+      - 4001:4001
